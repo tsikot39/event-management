@@ -49,15 +49,6 @@ interface OrganizerDashboardProps {
       name: string;
     };
   }>;
-  tickets: Array<{
-    _id: string;
-    quantity: number;
-    totalPrice: number;
-    status: string;
-    eventId: {
-      title: string;
-    };
-  }>;
   stats: {
     totalEvents: number;
     totalTicketsSold: number;
@@ -68,7 +59,6 @@ interface OrganizerDashboardProps {
 
 export default function OrganizerDashboard({
   events,
-  tickets,
   stats,
 }: OrganizerDashboardProps) {
   const [deletingEventId, setDeletingEventId] = useState<string | null>(null);
@@ -317,7 +307,7 @@ export default function OrganizerDashboard({
                         <AlertDialogHeader>
                           <AlertDialogTitle>Cancel Event</AlertDialogTitle>
                           <AlertDialogDescription>
-                            Are you sure you want to cancel "{event.title}"? This
+                            Are you sure you want to cancel &ldquo;{event.title}&rdquo;? This
                             action will mark the event as cancelled and cannot be
                             undone.
                           </AlertDialogDescription>

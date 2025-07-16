@@ -55,7 +55,6 @@ export default async function DashboardPage() {
 
   // Serialize for client components
   const serializedEvents = JSON.parse(JSON.stringify(events));
-  const serializedTickets = JSON.parse(JSON.stringify(tickets));
 
   return (
     <div className="min-h-screen bg-background">
@@ -72,7 +71,6 @@ export default async function DashboardPage() {
           </div>
           <OrganizerDashboard
             events={serializedEvents}
-            tickets={serializedTickets}
             stats={stats}
           />
         </div>

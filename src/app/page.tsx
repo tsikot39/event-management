@@ -17,11 +17,15 @@ export default function HomePage() {
           <h2 id="events" className="text-3xl font-bold mb-6 scroll-mt-20">Discover Events</h2>
           <div className="flex flex-col lg:flex-row gap-6">
             <div className="lg:w-1/4">
-              <EventFilters />
+              <Suspense fallback={<FiltersSkeleton />}>
+                <EventFilters />
+              </Suspense>
             </div>
             <div className="lg:w-3/4">
               <div className="mb-6">
-                <EventSearch />
+                <Suspense fallback={<SearchSkeleton />}>
+                  <EventSearch />
+                </Suspense>
               </div>
               <Suspense fallback={<EventListSkeleton />}>
                 <EventList />
@@ -30,6 +34,25 @@ export default function HomePage() {
           </div>
         </div>
       </main>
+    </div>
+  );
+}
+
+function SearchSkeleton() {
+  return (
+    <div className="space-y-4">
+      <Skeleton className="h-10 w-full rounded-lg" />
+    </div>
+  );
+}
+
+function FiltersSkeleton() {
+  return (
+    <div className="space-y-4">
+      <Skeleton className="h-8 w-full rounded-lg" />
+      <Skeleton className="h-32 w-full rounded-lg" />
+      <Skeleton className="h-8 w-full rounded-lg" />
+      <Skeleton className="h-24 w-full rounded-lg" />
     </div>
   );
 }
