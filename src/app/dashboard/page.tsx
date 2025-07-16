@@ -50,7 +50,8 @@ export default async function DashboardPage() {
     totalEvents,
     totalTicketsSold,
     totalRevenue,
-    upcomingEvents: events.filter((event) => event.startDate > new Date()).length,
+    upcomingEvents: events.filter((event) => event.startDate > new Date())
+      .length,
   };
 
   // Serialize for client components
@@ -69,10 +70,7 @@ export default async function DashboardPage() {
               Manage your events and track performance
             </p>
           </div>
-          <OrganizerDashboard
-            events={serializedEvents}
-            stats={stats}
-          />
+          <OrganizerDashboard events={serializedEvents} stats={stats} />
         </div>
       </div>
     </div>

@@ -30,10 +30,13 @@ export async function POST(request: NextRequest) {
     } catch (validationError) {
       console.error("Validation error:", validationError);
       return NextResponse.json(
-        { 
-          message: "Validation failed", 
-          errors: validationError instanceof Error ? validationError.message : "Unknown validation error"
-        }, 
+        {
+          message: "Validation failed",
+          errors:
+            validationError instanceof Error
+              ? validationError.message
+              : "Unknown validation error",
+        },
         { status: 400 }
       );
     }
@@ -43,16 +46,16 @@ export async function POST(request: NextRequest) {
     // Generate slug from category name first
     const categorySlug = validatedData.category
       .toLowerCase()
-      .replace(/[^a-z0-9]/g, '-')
-      .replace(/-+/g, '-')
-      .replace(/^-|-$/g, '');
+      .replace(/[^a-z0-9]/g, "-")
+      .replace(/-+/g, "-")
+      .replace(/^-|-$/g, "");
 
     // Find or create category (check by both name and slug)
     let category = await Category.findOne({
       $or: [
         { name: validatedData.category.toLowerCase() },
-        { slug: categorySlug }
-      ]
+        { slug: categorySlug },
+      ],
     });
 
     if (!category) {
@@ -77,10 +80,10 @@ export async function POST(request: NextRequest) {
     // Generate slug from event title
     const baseSlug = validatedData.title
       .toLowerCase()
-      .replace(/[^a-z0-9]/g, '-')
-      .replace(/-+/g, '-')
-      .replace(/^-|-$/g, '');
-    
+      .replace(/[^a-z0-9]/g, "-")
+      .replace(/-+/g, "-")
+      .replace(/^-|-$/g, "");
+
     // Ensure slug is unique
     let slug = baseSlug;
     let counter = 1;
@@ -105,7 +108,7 @@ export async function POST(request: NextRequest) {
       capacity: validatedData.maxAttendees,
       organizerId: session.user.id,
       categoryId: category._id,
-      imageUrl: validatedData.images?.[0] || '',
+      imageUrl: validatedData.images?.[0] || "",
       tags: validatedData.tags || [],
       ticketTypes: [
         {
@@ -165,12 +168,12 @@ export async function GET(request: NextRequest) {
     const sort = searchParams.get("sort") || "date";
 
     const query: Record<string, unknown> = {
-      status: 'published' // Only show published events in public listing
+      status: "published", // Only show published events in public listing
     };
 
     if (category && category !== "all") {
       const categoryDoc = await Category.findOne({
-        name: { $regex: new RegExp(`^${category}$`, 'i') }, // Case-insensitive match
+        name: { $regex: new RegExp(`^${category}$`, "i") }, // Case-insensitive match
       });
       if (categoryDoc) {
         query.categoryId = categoryDoc._id;
@@ -242,15 +245,23 @@ export async function GET(request: NextRequest) {
         const attendeeCount = await Ticket.countDocuments({
           eventId: event._id,
           paymentStatus: "completed",
-          status: "active"
+          status: "active",
         });
 
         // Update the ticketTypes with real sold counts
         const eventObj = event.toObject();
-        eventObj.ticketTypes = eventObj.ticketTypes.map((ticketType: { name: string; price: number; quantity: number; description?: string; sold?: number }) => ({
-          ...ticketType,
-          sold: attendeeCount // For simplicity, showing total sold across all ticket types
-        }));
+        eventObj.ticketTypes = eventObj.ticketTypes.map(
+          (ticketType: {
+            name: string;
+            price: number;
+            quantity: number;
+            description?: string;
+            sold?: number;
+          }) => ({
+            ...ticketType,
+            sold: attendeeCount, // For simplicity, showing total sold across all ticket types
+          })
+        );
 
         return eventObj;
       })

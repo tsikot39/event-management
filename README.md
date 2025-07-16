@@ -7,18 +7,21 @@ A comprehensive Next.js-based event management and ticketing platform that allow
 **EventHub** is a full-stack web application that bridges the gap between event organizers and attendees:
 
 ### **For Event Organizers:**
+
 - Create and publish events with rich details (descriptions, dates, locations, pricing)
 - Manage multiple ticket types with different pricing tiers
 - Track real-time sales analytics and attendee metrics
 - Monitor event performance through comprehensive dashboards
 
 ### **For Attendees:**
+
 - Discover events through advanced search and filtering
 - Purchase tickets with a seamless checkout experience
 - Manage purchased tickets with digital confirmation codes
 - View event details, dates, and location information
 
 ### **Key Capabilities:**
+
 - **Real-time Attendee Tracking**: Dynamic count updates based on actual ticket sales
 - **Payment Simulation**: Realistic payment flow with card form validation
 - **Role-based Access**: Separate experiences for organizers vs attendees

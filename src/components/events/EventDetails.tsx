@@ -37,11 +37,20 @@ export default function EventDetails({ event }: EventDetailsProps) {
   const eventDate = new Date(event.startDate);
   const isEventPast = eventDate < new Date();
   const isOrganizer = session?.user?.id === event.organizerId._id;
-  const totalTickets = event.ticketTypes.reduce((sum: number, type: ITicketType) => sum + type.quantity, 0);
-  const soldTickets = event.ticketTypes.reduce((sum: number, type: ITicketType) => sum + type.sold, 0);
+  const totalTickets = event.ticketTypes.reduce(
+    (sum: number, type: ITicketType) => sum + type.quantity,
+    0
+  );
+  const soldTickets = event.ticketTypes.reduce(
+    (sum: number, type: ITicketType) => sum + type.sold,
+    0
+  );
   const availableTickets = totalTickets - soldTickets;
   const isSoldOut = availableTickets <= 0;
-  const minPrice = event.ticketTypes.length > 0 ? Math.min(...event.ticketTypes.map((t: ITicketType) => t.price)) : 0;
+  const minPrice =
+    event.ticketTypes.length > 0
+      ? Math.min(...event.ticketTypes.map((t: ITicketType) => t.price))
+      : 0;
 
   const formatDate = (date: Date) => {
     return date.toLocaleDateString("en-US", {
@@ -96,19 +105,19 @@ export default function EventDetails({ event }: EventDetailsProps) {
 
               {/* Category and Tags */}
               <div className="flex flex-wrap gap-2">
-                {event.categoryId && typeof event.categoryId === 'object' && (
+                {event.categoryId && typeof event.categoryId === "object" && (
                   <Badge variant="secondary">{event.categoryId.name}</Badge>
                 )}
                 {/* Event Type Badge */}
-                <Badge 
-                  variant="outline" 
+                <Badge
+                  variant="outline"
                   className={`${
-                    event.isVirtual 
-                      ? 'bg-blue-50 text-blue-700 border-blue-200' 
-                      : 'bg-green-50 text-green-700 border-green-200'
+                    event.isVirtual
+                      ? "bg-blue-50 text-blue-700 border-blue-200"
+                      : "bg-green-50 text-green-700 border-green-200"
                   }`}
                 >
-                  {event.isVirtual ? '🌐 Virtual' : '📍 In-Person'}
+                  {event.isVirtual ? "🌐 Virtual" : "📍 In-Person"}
                 </Badge>
                 {event.tags?.map((tag) => (
                   <Badge key={tag} variant="outline">
@@ -128,8 +137,8 @@ export default function EventDetails({ event }: EventDetailsProps) {
                   <div className="flex items-center text-gray-600">
                     <Icons.calendar className="w-5 h-5 mr-3" />
                     <span>
-                      {formatDate(eventDate)} at{" "}
-                      {formatTime(event.startTime)} - {formatTime(event.endTime)}
+                      {formatDate(eventDate)} at {formatTime(event.startTime)} -{" "}
+                      {formatTime(event.endTime)}
                     </span>
                   </div>
 
@@ -152,7 +161,9 @@ export default function EventDetails({ event }: EventDetailsProps) {
 
                 {/* Event Description */}
                 <div className="prose max-w-none">
-                  <h2 className="text-xl font-semibold mb-3">About this event</h2>
+                  <h2 className="text-xl font-semibold mb-3">
+                    About this event
+                  </h2>
                   <p className="text-gray-700 whitespace-pre-wrap">
                     {event.description}
                   </p>
@@ -180,7 +191,9 @@ export default function EventDetails({ event }: EventDetailsProps) {
                   )}
                   {isSoldOut && !isEventPast && (
                     <Alert>
-                      <AlertDescription>This event is sold out.</AlertDescription>
+                      <AlertDescription>
+                        This event is sold out.
+                      </AlertDescription>
                     </Alert>
                   )}
                 </CardHeader>
@@ -197,7 +210,9 @@ export default function EventDetails({ event }: EventDetailsProps) {
                             style={{
                               width: `${
                                 totalTickets > 0
-                                  ? ((totalTickets - availableTickets) / totalTickets) * 100
+                                  ? ((totalTickets - availableTickets) /
+                                      totalTickets) *
+                                    100
                                   : 0
                               }%`,
                             }}
@@ -245,7 +260,7 @@ export default function EventDetails({ event }: EventDetailsProps) {
               </Card>
 
               {/* Organizer Info */}
-              {event.organizerId && typeof event.organizerId === 'object' && (
+              {event.organizerId && typeof event.organizerId === "object" && (
                 <Card>
                   <CardHeader>
                     <CardTitle>Organized by</CardTitle>

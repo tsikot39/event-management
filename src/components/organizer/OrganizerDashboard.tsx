@@ -261,12 +261,10 @@ export default function OrganizerDashboard({
                       <div className="flex items-center">
                         <Icons.users className="w-4 h-4 mr-2" />
                         <span>
-                          {
-                            event.ticketTypes.reduce(
-                              (sum, ticket) => sum + ticket.sold,
-                              0
-                            )
-                          }{" "}
+                          {event.ticketTypes.reduce(
+                            (sum, ticket) => sum + ticket.sold,
+                            0
+                          )}{" "}
                           / {event.capacity} attendees
                         </span>
                       </div>
@@ -307,9 +305,9 @@ export default function OrganizerDashboard({
                         <AlertDialogHeader>
                           <AlertDialogTitle>Cancel Event</AlertDialogTitle>
                           <AlertDialogDescription>
-                            Are you sure you want to cancel &ldquo;{event.title}&rdquo;? This
-                            action will mark the event as cancelled and cannot be
-                            undone.
+                            Are you sure you want to cancel &ldquo;{event.title}
+                            &rdquo;? This action will mark the event as
+                            cancelled and cannot be undone.
                           </AlertDialogDescription>
                         </AlertDialogHeader>
                         <AlertDialogFooter>

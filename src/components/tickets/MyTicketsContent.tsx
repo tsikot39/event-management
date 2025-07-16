@@ -38,7 +38,9 @@ interface MyTicketsContentProps {
 }
 
 export default function MyTicketsContent({ tickets }: MyTicketsContentProps) {
-  const [processingPayment, setProcessingPayment] = useState<string | null>(null);
+  const [processingPayment, setProcessingPayment] = useState<string | null>(
+    null
+  );
   const [paymentModalOpen, setPaymentModalOpen] = useState(false);
   const [selectedTicket, setSelectedTicket] = useState<string | null>(null);
 
@@ -54,9 +56,9 @@ export default function MyTicketsContent({ tickets }: MyTicketsContentProps) {
 
   const handleCompletePayment = async () => {
     if (!selectedTicket) return;
-    
+
     setProcessingPayment(selectedTicket);
-    
+
     try {
       const response = await fetch("/api/tickets/complete-payment", {
         method: "POST",
@@ -230,8 +232,8 @@ export default function MyTicketsContent({ tickets }: MyTicketsContentProps) {
 
                 <div className="flex space-x-2">
                   {ticket.paymentStatus === "pending" && (
-                    <Button 
-                      variant="default" 
+                    <Button
+                      variant="default"
                       size="sm"
                       disabled={processingPayment === ticket._id}
                       onClick={() => handleOpenPaymentModal(ticket._id)}
@@ -262,7 +264,8 @@ export default function MyTicketsContent({ tickets }: MyTicketsContentProps) {
                 <Alert className="mt-4">
                   <Icons.dollarSign className="h-4 w-4" />
                   <AlertDescription>
-                    Payment is pending for this ticket. Click &quot;Complete Payment&quot; to finalize your purchase.
+                    Payment is pending for this ticket. Click &quot;Complete
+                    Payment&quot; to finalize your purchase.
                   </AlertDescription>
                 </Alert>
               )}
@@ -287,13 +290,17 @@ export default function MyTicketsContent({ tickets }: MyTicketsContentProps) {
           </Card>
         );
       })}
-      
+
       {/* Payment Modal */}
       <PaymentModal
         isOpen={paymentModalOpen}
         onClose={handleClosePaymentModal}
         onPaymentComplete={handleCompletePayment}
-        ticketAmount={selectedTicket ? tickets.find(t => t._id === selectedTicket)?.totalAmount || 0 : 0}
+        ticketAmount={
+          selectedTicket
+            ? tickets.find((t) => t._id === selectedTicket)?.totalAmount || 0
+            : 0
+        }
         isProcessing={processingPayment !== null}
       />
     </div>

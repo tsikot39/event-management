@@ -26,7 +26,9 @@ export default async function CreateEventPage() {
       <div className="container mx-auto py-8">
         <div className="max-w-2xl mx-auto">
           <div className="mb-8">
-            <h1 className="text-3xl font-bold text-gray-900">Create New Event</h1>
+            <h1 className="text-3xl font-bold text-gray-900">
+              Create New Event
+            </h1>
             <p className="mt-2 text-gray-600">
               Fill in the details below to create your event
             </p>

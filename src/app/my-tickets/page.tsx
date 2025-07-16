@@ -25,7 +25,8 @@ export default async function MyTicketsPage() {
   const tickets = await Ticket.find({ userId: session.user.id })
     .populate({
       path: "eventId",
-      select: "title startDate endDate startTime endTime location venue isVirtual slug organizerId",
+      select:
+        "title startDate endDate startTime endTime location venue isVirtual slug organizerId",
       populate: {
         path: "organizerId",
         select: "name companyName",
@@ -40,19 +41,29 @@ export default async function MyTicketsPage() {
 
   // Transform the data to match component expectations
   const rawTickets = JSON.parse(JSON.stringify(tickets));
-  const serializedTickets = rawTickets.map((ticket: { eventId: { startDate: string; [key: string]: unknown }; totalPrice: number }) => ({
-    ...ticket,
-    event: {
-      ...ticket.eventId,
-      date: ticket.eventId.startDate, // Map startDate to date for component compatibility
-    },
-    totalAmount: ticket.totalPrice, // Map totalPrice to totalAmount for component compatibility
-  }));
+  const serializedTickets = rawTickets.map(
+    (ticket: {
+      eventId: { startDate: string; [key: string]: unknown };
+      totalPrice: number;
+    }) => ({
+      ...ticket,
+      event: {
+        ...ticket.eventId,
+        date: ticket.eventId.startDate, // Map startDate to date for component compatibility
+      },
+      totalAmount: ticket.totalPrice, // Map totalPrice to totalAmount for component compatibility
+    })
+  );
 
-  console.log("Serialized tickets sample:", serializedTickets.length > 0 ? {
-    date: serializedTickets[0].event.date,
-    originalStartDate: rawTickets[0].eventId.startDate
-  } : "No tickets");
+  console.log(
+    "Serialized tickets sample:",
+    serializedTickets.length > 0
+      ? {
+          date: serializedTickets[0].event.date,
+          originalStartDate: rawTickets[0].eventId.startDate,
+        }
+      : "No tickets"
+  );
 
   return (
     <div className="min-h-screen bg-background">
