@@ -34,7 +34,8 @@ A comprehensive Next.js-based event management and ticketing platform that allow
 #### 🔐 **Authentication System**
 
 - **Login/Register Pages**: Complete forms with validation (`/auth/login`, `/auth/register`)
-- **NextAuth.js Integration**: Email/password credentials provider (GitHub OAuth removed)
+- **NextAuth.js Integration**: Email/password credentials + Google OAuth provider
+- **Account Linking**: Automatic linking of Google OAuth and manual accounts with same email
 - **Role-based Access**: Organizer vs Attendee roles with proper middleware
 - **Protected Routes**: Automatic redirects and authorization checks
 - **Consistent Navigation**: Sticky navbar with hideAuth prop for auth pages
@@ -103,12 +104,14 @@ http://localhost:3000
 
 ### 🔧 **Recent Fixes & Improvements**
 
+- **Google OAuth Integration**: Added Google OAuth with automatic account linking for same email addresses
 - **Fixed Attendee Count Display**: Now shows real-time counts from actual ticket purchases
 - **Improved Payment Flow**: Added realistic payment modal with card form validation
 - **Enhanced Navigation**: Fixed sticky navbar with proper scroll behavior
 - **Image Configuration**: Configured Next.js for external image domains (Unsplash)
 - **Date Handling**: Fixed date serialization issues in ticket display
 - **Field Mapping**: Corrected database field mapping inconsistencies
+- **Build Optimization**: Fixed ESLint errors and Suspense boundary issues for deployment
 
 ---
 
@@ -117,7 +120,8 @@ http://localhost:3000
 ### Core Functionality
 
 - **Event Discovery**: Browse and search events with advanced filtering
-- **User Authentication**: Secure authentication with NextAuth.js supporting email/password and OAuth (Google)
+- **User Authentication**: Secure authentication with NextAuth.js supporting email/password and Google OAuth
+- **Account Linking**: Seamless linking between manual signup and Google OAuth for same email addresses
 - **Role-Based Access**: Separate experiences for organizers and attendees
 - **Event Management**: Create, edit, and manage events with comprehensive details
 - **Ticket Management**: Multiple ticket types with pricing and availability tracking
@@ -141,7 +145,7 @@ http://localhost:3000
 ## 🛠 Tech Stack
 
 - **Framework**: Next.js 15 with App Router and Turbopack
-- **Authentication**: NextAuth.js v5 (beta) with credentials provider
+- **Authentication**: NextAuth.js v5 (beta) with credentials and Google OAuth providers
 - **Database**: MongoDB Atlas with Mongoose ODM
 - **UI Components**: Shadcn UI + Tailwind CSS
 - **Validation**: Zod schemas for form and API validation
@@ -271,6 +275,10 @@ interface ITicket {
 
    # JWT
    JWT_SECRET=your-jwt-secret-key-here
+
+   # Google OAuth (required for Google sign-in)
+   GOOGLE_CLIENT_ID=your-google-client-id
+   GOOGLE_CLIENT_SECRET=your-google-client-secret
    ```
 
 4. **Start the development server**
@@ -281,6 +289,30 @@ interface ITicket {
 
 5. **Open your browser**
    Navigate to [http://localhost:3000](http://localhost:3000)
+
+### Setting Up Google OAuth (Optional)
+
+To enable Google OAuth authentication:
+
+1. **Create Google OAuth App**:
+   - Go to [Google Cloud Console](https://console.cloud.google.com/)
+   - Create a new project or select existing
+   - Enable Google+ API
+   - Create OAuth 2.0 credentials
+   - Add authorized redirect URIs:
+     - `http://localhost:3000/api/auth/callback/google` (development)
+     - `https://yourdomain.com/api/auth/callback/google` (production)
+
+2. **Update Environment Variables**:
+   ```bash
+   GOOGLE_CLIENT_ID=your-actual-google-client-id
+   GOOGLE_CLIENT_SECRET=your-actual-google-client-secret
+   ```
+
+3. **Test the Integration**:
+   - Restart your development server
+   - Go to `/auth/login`
+   - Click "Continue with Google"
 
 ## 🔧 Development
 
