@@ -1,33 +1,47 @@
 import { Suspense } from 'react';
+import { auth } from '@/lib/auth';
 import { EventList } from '@/components/events/event-list';
 import { EventSearch } from '@/components/events/event-search';
 import { EventFilters } from '@/components/events/event-filters';
-import { Hero } from '@/components/layout/hero';
+import { OrganizerEventList } from '@/components/events/organizer-event-list';
 import { Navbar } from '@/components/layout/navbar';
 import { Skeleton } from '@/components/ui/skeleton';
 
-export default function HomePage() {
+export default async function EventsPage() {
+  const session = await auth();
+  const isOrganizer = session?.user?.role === 'organizer';
+
   return (
     <div className="min-h-screen bg-background">
       <Navbar />
-      <Hero />
       
       <main className="container mx-auto px-4 py-8">
         <div className="mb-8">
-          <h2 id="events" className="text-3xl font-bold mb-6 scroll-mt-20">Discover Events</h2>
-          <div className="flex flex-col lg:flex-row gap-6">
-            <div className="lg:w-1/4">
-              <EventFilters />
-            </div>
-            <div className="lg:w-3/4">
-              <div className="mb-6">
-                <EventSearch />
-              </div>
-              <Suspense fallback={<EventListSkeleton />}>
-                <EventList />
-              </Suspense>
-            </div>
+          <div className="flex items-center justify-between mb-6">
+            <h1 className="text-3xl font-bold">
+              {isOrganizer ? 'My Events' : 'All Events'}
+            </h1>
           </div>
+          
+          {isOrganizer ? (
+            <Suspense fallback={<EventListSkeleton />}>
+              <OrganizerEventList />
+            </Suspense>
+          ) : (
+            <div className="flex flex-col lg:flex-row gap-6">
+              <div className="lg:w-1/4">
+                <EventFilters />
+              </div>
+              <div className="lg:w-3/4">
+                <div className="mb-6">
+                  <EventSearch />
+                </div>
+                <Suspense fallback={<EventListSkeleton />}>
+                  <EventList />
+                </Suspense>
+              </div>
+            </div>
+          )}
         </div>
       </main>
     </div>

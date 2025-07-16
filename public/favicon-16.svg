@@ -1,0 +1,16 @@
+<svg width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="16" height="16" rx="3" fill="#3B82F6" />
+  
+  <!-- Simple Calendar -->
+  <rect x="3" y="4" width="10" height="9" rx="1" fill="white" />
+  <rect x="3" y="4" width="10" height="3" rx="1" fill="white" />
+  <line x1="6" y1="2" x2="6" y2="6" stroke="white" stroke-width="1" stroke-linecap="round" />
+  <line x1="10" y1="2" x2="10" y2="6" stroke="white" stroke-width="1" stroke-linecap="round" />
+  
+  <!-- Small dots -->
+  <circle cx="6" cy="9" r="0.5" fill="#3B82F6" />
+  <circle cx="8" cy="9" r="0.5" fill="#3B82F6" />
+  <circle cx="10" cy="9" r="0.5" fill="#F59E0B" />
+  <circle cx="6" cy="11" r="0.5" fill="#3B82F6" />
+</svg>
